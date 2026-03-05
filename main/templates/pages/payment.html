@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment — CodeWithMe</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand"><div class="brand-icon">💻</div>Code<span>WithMe</span></div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Courses</a></li>
+    <li><a href="#">About Me</a></li>
+    <li><a href="#">Blog</a></li>
+  </ul>
+  <button class="nav-cta" onclick="window.location.href='dashboard.html'">My Dashboard</button>
+</nav>
+
+<div class="pay-wrap">
+  <div class="pay-side">
+    <button class="btn-ghost" style="margin-bottom:24px;padding:9px 20px;font-size:0.82rem;" onclick="window.history.back()">← Back</button>
+    <h2>Almost there! 🎉</h2>
+    <p class="pay-sub">Complete your enrollment and start learning within 24 hours.</p>
+
+    <div class="fsec">👤 Your Details</div>
+    <div class="frow">
+      <div class="fg"><label class="fl">First Name</label><input class="fi" type="text" placeholder="Jane"></div>
+      <div class="fg"><label class="fl">Last Name</label><input class="fi" type="text" placeholder="Wanjiku"></div>
+    </div>
+    <div class="fg"><label class="fl">Email Address</label><input class="fi" type="email" placeholder="jane@email.com"></div>
+    <div class="fg"><label class="fl">Phone (for WhatsApp updates)</label><input class="fi" type="tel" placeholder="+254 7XX XXX XXX"></div>
+
+    <div class="fsec">💳 Payment Method</div>
+    <div class="pm-group">
+      <div class="pm-opt sel" onclick="selPM(this)">📱 M-PESA</div>
+      <div class="pm-opt" onclick="selPM(this)">💳 Card</div>
+      <div class="pm-opt" onclick="selPM(this)">🏦 Bank</div>
+    </div>
+    <div class="fg"><label class="fl">Card Number</label><input class="fi" type="text" placeholder="1234  5678  9012  3456" maxlength="22" id="cnum"></div>
+    <div class="frow">
+      <div class="fg"><label class="fl">Expiry</label><input class="fi" type="text" placeholder="MM / YY" maxlength="7"></div>
+      <div class="fg"><label class="fl">CVV</label><input class="fi" type="text" placeholder="•••" maxlength="4"></div>
+    </div>
+
+    <button class="pay-btn" onclick="processPayment()">🔒 Pay & Start Learning — <span id="pay-amt">KES 8,500</span></button>
+    <div class="sec-note">🔐 256-bit SSL encryption · 7-day money-back guarantee</div>
+  </div>
+
+  <div>
+    <div class="order-card">
+      <div class="oc-title">Your Order 🛒</div>
+      <div class="oc-course">
+        <div class="oc-thumb" id="oc-thumb" style="background:linear-gradient(135deg,#0d9488,#0891b2)">🌐</div>
+        <div class="oc-info">
+          <h4 id="oc-name">Full-Stack Web Dev Bootcamp</h4>
+          <p id="oc-meta">48 lessons · 36 hours · Certificate</p>
+        </div>
+      </div>
+      <div class="oc-line"><span>Original price</span><span id="oc-orig">KES 12,000</span></div>
+      <div class="oc-line disc"><span>🎉 Discount</span><span id="oc-disc">–KES 3,500</span></div>
+      <div class="oc-total"><span>Total</span><span id="oc-total">KES 8,500</span></div>
+      <div class="promo-row">
+        <input class="promo-in" id="promo-code" placeholder="Promo code? Try CODE10">
+        <button class="promo-go" onclick="applyPromo()">Apply</button>
+      </div>
+      <p id="promo-msg" style="font-size:0.78rem;margin-top:8px;font-weight:700;"></p>
+      <div class="guarantee"><span>🛡️</span><span>7-day money-back guarantee. No questions asked if you're not happy!</span></div>
+    </div>
+  </div>
+</div>
+
+<script src="../js/courses.js"></script>
+<script src="../js/payment.js"></script>
+</body>
+</html>

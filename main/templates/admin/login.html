@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login — CodeWithMe</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#0d9488;--tl:#ccfbf1;--td:#0f766e;--ink:#1c1917;--mu:#64748b;--br:#e2e8f0;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#0d9488 0%,#0891b2 55%,#6366f1 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+body::before{content:'{ }';position:fixed;right:-30px;bottom:20px;font-family:'Fira Code',monospace;font-size:14rem;color:rgba(255,255,255,0.05);pointer-events:none;}
+.card{background:white;border-radius:28px;padding:46px 40px 40px;width:420px;box-shadow:0 40px 90px rgba(0,0,0,0.22);position:relative;z-index:1;animation:up .4s cubic-bezier(.34,1.56,.64,1);}
+@keyframes up{from{opacity:0;transform:translateY(32px);}to{opacity:1;transform:translateY(0);}}
+.brand{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:24px;}
+.bico{width:40px;height:40px;background:var(--teal);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+.bname{font-size:1.45rem;font-weight:900;color:var(--ink);}
+.bname span{color:var(--teal);}
+.badge{background:#fef3c7;color:#92400e;border-radius:100px;padding:5px 16px;font-size:0.75rem;font-weight:800;width:fit-content;margin:0 auto 22px;display:flex;align-items:center;gap:6px;}
+h2{font-size:1.5rem;font-weight:900;text-align:center;margin-bottom:5px;}
+.sub{font-size:0.84rem;color:var(--mu);text-align:center;font-weight:500;margin-bottom:26px;}
+.hint{background:#f0fdfa;border:1.5px solid var(--tl);border-radius:10px;padding:10px 14px;font-size:0.77rem;color:var(--td);font-weight:700;margin-bottom:18px;}
+.err{display:none;background:#fef2f2;border:1.5px solid #fca5a5;border-radius:10px;padding:10px 14px;font-size:0.79rem;color:#dc2626;font-weight:700;margin-bottom:14px;text-align:center;}
+.err.show{display:block;}
+.fg{margin-bottom:14px;}
+.fl{font-size:0.79rem;font-weight:800;display:block;margin-bottom:5px;}
+.fi{width:100%;border:2px solid var(--br);border-radius:12px;padding:12px 16px;font-family:'Nunito',sans-serif;font-size:0.9rem;font-weight:600;outline:none;transition:border-color .2s,box-shadow .2s;}
+.fi:focus{border-color:var(--teal);box-shadow:0 0 0 4px rgba(13,148,136,.1);}
+.btn{width:100%;background:var(--teal);color:white;border:none;padding:14px;border-radius:14px;font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;cursor:pointer;margin-top:6px;transition:transform .2s,box-shadow .2s;}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(13,148,136,.4);}
+.back{display:block;text-align:center;margin-top:18px;font-size:0.81rem;color:var(--mu);font-weight:600;}
+.back a{color:var(--teal);font-weight:800;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="brand"><div class="bico">💻</div><div class="bname">Code<span>WithMe</span></div></div>
+  <div class="badge">🔐 Admin Access Only</div>
+  <h2>Welcome back, Brian</h2>
+  <p class="sub">Log in to manage your entire platform.</p>
+  <div class="hint">💡 Username: <strong>admin</strong> &nbsp;·&nbsp; Password: <strong>admin123</strong></div>
+  <div class="err" id="err">❌ Wrong credentials. Please try again.</div>
+  <div class="fg"><label class="fl">Username</label><input class="fi" id="u" type="text" placeholder="admin"></div>
+  <div class="fg"><label class="fl">Password</label><input class="fi" id="p" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()"></div>
+  <button class="btn" onclick="login()">🔐 Enter Admin Panel</button>
+  <span class="back"><a href="../index.html">← Back to website</a></span>
+</div>
+<script>
+function login(){
+  const u=document.getElementById('u').value.trim();
+  const p=document.getElementById('p').value;
+  if(u==='admin'&&p==='admin123'){
+    sessionStorage.setItem('adminAuth','true');
+    window.location.href='dashboard.html';
+  } else {
+    document.getElementById('err').classList.add('show');
+    document.getElementById('p').value='';
+  }
+}
+</script>
+</body>
+</html>

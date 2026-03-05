@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curriculum — CodeWithMe</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand"><div class="brand-icon">💻</div>Code<span>WithMe</span></div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Courses</a></li>
+    <li><a href="#">About Me</a></li>
+    <li><a href="#">Blog</a></li>
+  </ul>
+  <button class="nav-cta" onclick="window.location.href='dashboard.html'">My Dashboard</button>
+</nav>
+
+<div class="cur-hero">
+  <button class="back-btn" onclick="window.location.href='../index.html'">← Back to Courses</button>
+  <div class="cur-tag" id="cur-tag">Web Development</div>
+  <h1 id="cur-title">Full-Stack Web Dev Bootcamp</h1>
+  <p id="cur-desc">From zero to full-stack. Build 5 real projects with your instructor every step of the way.</p>
+  <div class="cur-stats">
+    <span class="cstat" id="cur-les">📚 48 lessons</span>
+    <span class="cstat" id="cur-hrs">⏱ 36 hours</span>
+    <span class="cstat">🏆 Certificate</span>
+    <span class="cstat">💬 Direct chat</span>
+  </div>
+</div>
+
+<div class="cur-body">
+  <div id="mods-container"></div>
+  <div>
+    <div class="enroll-card">
+      <div class="ec-price-area">
+        <div class="ec-orig" id="ec-orig">KES 12,000</div>
+        <div class="ec-price" id="ec-price">KES 8,500</div>
+        <div class="ec-save">🎉 Limited time discount</div>
+      </div>
+      <button class="ec-cta" onclick="window.location.href='payment.html'">Enroll Now 🚀</button>
+      <button class="ec-try">Preview Free Lessons 👀</button>
+      <div class="ec-includes">
+        <h4>What's included ✅</h4>
+        <div class="ec-item"><div class="ec-ico">🎥</div>Live 1-on-1 sessions with instructor</div>
+        <div class="ec-item"><div class="ec-ico">📋</div>Structured lesson plan & materials</div>
+        <div class="ec-item"><div class="ec-ico">🛠</div>Real projects with personal feedback</div>
+        <div class="ec-item"><div class="ec-ico">💬</div>WhatsApp/chat support</div>
+        <div class="ec-item"><div class="ec-ico">🏆</div>Completion certificate</div>
+        <div class="ec-item"><div class="ec-ico">♾️</div>Lifetime access to materials</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../js/courses.js"></script>
+<script src="../js/curriculum.js"></script>
+</body>
+</html>

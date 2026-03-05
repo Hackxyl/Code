@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Dashboard — CodeWithMe</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand"><div class="brand-icon">💻</div>Code<span>WithMe</span></div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Courses</a></li>
+    <li><a href="#">About Me</a></li>
+    <li><a href="#">Blog</a></li>
+  </ul>
+  <button class="nav-cta" style="background:var(--teal-light);color:var(--teal-dark);">My Dashboard</button>
+</nav>
+
+<!-- Success banner (shown after payment) -->
+<div class="dsb" id="success-banner" style="display:none">
+  <div class="dsb-icon">🎉</div>
+  <h2>You're in! Welcome to the course!</h2>
+  <p>Payment confirmed! Your instructor has been notified and will message you within a few hours to schedule your first live session.</p>
+  <button class="dsb-btn" onclick="document.getElementById('success-banner').style.display='none'">Go to My Dashboard →</button>
+</div>
+
+<div class="dash-wrap">
+  <div class="welcome-bar">
+    <div class="wb-av">🧑‍💻</div>
+    <div class="wb-txt">
+      <h3>Welcome back! Ready to code today? 🚀</h3>
+      <p id="wb-course">Full-Stack Web Dev Bootcamp · Started 3 days ago</p>
+    </div>
+    <div class="wb-pct">
+      <div class="wb-num">8%</div>
+      <div class="wb-lbl">complete</div>
+    </div>
+  </div>
+
+  <div class="dash-tabs">
+    <button class="dtab active" onclick="swTab(this,'t-plan')">📋 My Lessons</button>
+    <button class="dtab" onclick="swTab(this,'t-chat')">💬 Chat with Instructor</button>
+    <button class="dtab" onclick="swTab(this,'t-res')">📁 Resources</button>
+  </div>
+
+  <!-- Lessons Tab -->
+  <div id="t-plan">
+    <div class="lp-card">
+      <div class="lp-hdr">
+        <h3 id="dash-cn">Full-Stack Web Dev Bootcamp</h3>
+        <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+        <div class="prog-txt">4 of 48 lessons completed · You're doing great! 💪</div>
+      </div>
+      <div class="li-r done"><div class="li-circ dc">✓</div><div class="li-inf"><div class="li-nm">Introduction & Welcome</div><div class="li-tp">📹 Video lesson</div></div><div class="li-du">20 min</div></div>
+      <div class="li-r done"><div class="li-circ dc">✓</div><div class="li-inf"><div class="li-nm">Setting Up VS Code & Tools</div><div class="li-tp">📹 Video + Setup guide</div></div><div class="li-du">35 min</div></div>
+      <div class="li-r done"><div class="li-circ dc">✓</div><div class="li-inf"><div class="li-nm">HTML — Building Your First Page</div><div class="li-tp">📹 Video lesson</div></div><div class="li-du">50 min</div></div>
+      <div class="li-r done"><div class="li-circ dc">✓</div><div class="li-inf"><div class="li-nm">CSS — Making Things Look Great</div><div class="li-tp">📝 Project: Style a webpage</div></div><div class="li-du">1h 10min</div></div>
+      <div class="li-r cur"><div class="li-circ cc"></div><div class="li-inf"><div class="li-nm">JavaScript — Variables & Functions</div><div class="li-tp">🔴 Live session with instructor</div></div><div class="li-du">1h</div><button class="join-btn">Join Now 🎙</button></div>
+      <div class="li-r"><div class="li-circ"></div><div class="li-inf"><div class="li-nm">JavaScript — DOM & Events</div><div class="li-tp">📹 Video lesson</div></div><div class="li-du">55 min</div></div>
+      <div class="li-r"><div class="li-circ"></div><div class="li-inf"><div class="li-nm">Project 1: Interactive Quiz App</div><div class="li-tp">🛠 Build with instructor feedback</div></div><div class="li-du">2h</div></div>
+      <div class="li-r"><div class="li-circ"></div><div class="li-inf"><div class="li-nm">Introduction to React</div><div class="li-tp">📹 Video + Live session</div></div><div class="li-du">1h 30min</div></div>
+    </div>
+  </div>
+
+  <!-- Chat Tab -->
+  <div id="t-chat" style="display:none">
+    <div class="chat-card">
+      <div class="chat-hdr">
+        <div class="chat-av">🧑‍🏫</div>
+        <div class="chat-av-info">
+          <h4>Your Instructor</h4>
+          <div class="chat-status">Online — usually replies in minutes</div>
+        </div>
+      </div>
+      <div class="chat-msgs" id="chat-msgs">
+        <div class="msg fi"><div class="bubble">Hey! Welcome to CodeWithMe! 👋 I'm really excited to work with you. How comfortable are you with HTML right now?</div><div class="mtime">Yesterday · 2:14 PM</div></div>
+        <div class="msg me"><div class="bubble">Hi! I've done a tiny bit before but honestly I'm starting fresh 😅 Super excited though!</div><div class="mtime">Yesterday · 3:02 PM</div></div>
+        <div class="msg fi"><div class="bubble">That's perfect — blank-slate students learn the fastest! 🚀 I've booked your first session for tomorrow at 3PM EAT. We'll go slow, have fun, and build something you're proud of. See you then! 💪</div><div class="mtime">Yesterday · 3:18 PM</div></div>
+      </div>
+      <div class="chat-in-area">
+        <input class="chat-in" id="chat-in" placeholder="Ask your instructor anything..." onkeydown="if(event.key==='Enter')sendMsg()">
+        <button class="chat-send" onclick="sendMsg()">Send 💬</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resources Tab -->
+  <div id="t-res" style="display:none">
+    <div class="side-card">
+      <h4>📅 Next Live Session</h4>
+      <div class="sess-time">
+        <div class="st-date">Thursday, 6 March · 3:00 PM EAT</div>
+        <div class="st-lbl">JavaScript Functions — Live with Instructor</div>
+      </div>
+      <button class="ec-try" style="width:100%;margin-top:4px;">Add to Calendar 📅</button>
+    </div>
+    <div class="side-card">
+      <h4>📁 Course Resources</h4>
+      <div class="res-item">📄 Course Starter Files.zip</div>
+      <div class="res-item">📗 HTML Cheat Sheet.pdf</div>
+      <div class="res-item">📘 CSS Reference Guide.pdf</div>
+      <div class="res-item">📙 JS Quick Reference.pdf</div>
+      <div class="res-item">🔗 Recommended Tools & Links</div>
+    </div>
+    <div class="side-card" style="background:linear-gradient(135deg,var(--teal-light),#eff6ff);border-color:var(--teal);">
+      <h4>🏆 Your Certificate</h4>
+      <p style="font-size:0.83rem;color:var(--muted);font-weight:600;margin-bottom:14px;line-height:1.6;">Complete all 48 lessons to unlock your personalized certificate.</p>
+      <div style="background:white;border-radius:10px;padding:12px;border:1.5px solid var(--border);">
+        <div style="font-size:0.75rem;color:var(--muted);font-weight:700;margin-bottom:8px;">Progress to certificate</div>
+        <div style="background:var(--border);border-radius:100px;height:8px;overflow:hidden;">
+          <div style="width:8%;height:100%;background:linear-gradient(90deg,var(--teal),#0891b2);border-radius:100px;"></div>
+        </div>
+        <div style="font-size:0.75rem;color:var(--muted);font-weight:700;margin-top:6px;">4 / 48 lessons · Keep going! 🎯</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../js/dashboard.js"></script>
+</body>
+</html>

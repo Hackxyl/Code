@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeWithMe — Learn Tech the Fun Way</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* ── NAV EXTRAS ── */
+.nav-right { display: flex; align-items: center; gap: 10px; }
+.nav-login { background: transparent; color: var(--ink); border: 2px solid var(--border); padding: 9px 20px; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; font-weight: 800; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+.nav-login:hover { border-color: var(--teal); color: var(--teal); }
+
+/* ── FAQ ── */
+.faq-section { max-width: 780px; margin: 0 auto; }
+.faq-list { margin-top: 36px; }
+.faq-item { background: white; border: 2px solid var(--border); border-radius: 16px; margin-bottom: 10px; overflow: hidden; transition: border-color 0.2s; }
+.faq-item.open { border-color: var(--teal); }
+.faq-q { display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; cursor: pointer; font-weight: 800; font-size: 0.95rem; gap: 16px; transition: background 0.2s; user-select: none; }
+.faq-q:hover { background: var(--bg); }
+.faq-arr { font-size: 0.72rem; color: var(--muted); transition: transform 0.3s; flex-shrink: 0; }
+.faq-item.open .faq-arr { transform: rotate(180deg); }
+.faq-a { display: none; padding: 16px 22px 20px; font-size: 0.9rem; color: var(--muted); line-height: 1.75; font-weight: 500; border-top: 1.5px solid var(--border); }
+.faq-item.open .faq-a { display: block; }
+.faq-item.open .faq-q { color: var(--teal-dark); }
+
+/* ── BOTTOM CTA STRIP ── */
+.cta-strip { background: linear-gradient(135deg, #0d9488, #0891b2); border-radius: 24px; padding: 48px 40px; text-align: center; margin: 60px 56px; position: relative; overflow: hidden; }
+.cta-strip::before { content: '{ }'; position: absolute; right: 40px; top: 50%; transform: translateY(-50%); font-family: 'Fira Code', monospace; font-size: 5rem; color: rgba(255,255,255,0.07); }
+.cta-strip h2 { font-size: 1.8rem; font-weight: 900; color: white; margin-bottom: 10px; letter-spacing: -0.5px; }
+.cta-strip p { color: rgba(255,255,255,0.8); font-size: 0.95rem; font-weight: 500; margin-bottom: 28px; line-height: 1.6; }
+.cta-strip-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.cta-ghost { background: rgba(255,255,255,0.12); color: white; border: 2px solid rgba(255,255,255,0.3); padding: 13px 24px; border-radius: 100px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: background 0.2s; }
+.cta-ghost:hover { background: rgba(255,255,255,0.22); }
+
+/* ── MODAL OVERLAY ── */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 200; backdrop-filter: blur(5px); animation: fadeIn 0.2s ease; }
+.modal-overlay.open { display: block; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ── MODAL BOX ── */
+.modal {
+  display: none; position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -48%);
+  z-index: 201; background: white;
+  border-radius: 24px; width: 92%; max-width: 460px;
+  max-height: 90vh; overflow-y: auto;
+  padding: 36px 32px 32px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.22);
+  opacity: 0; transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1), opacity 0.22s ease;
+}
+.modal.open {
+  display: block;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+.modal-close { position: absolute; top: 14px; right: 16px; background: var(--bg); border: 2px solid var(--border); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 0.75rem; font-weight: 800; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+.modal-close:hover { background: #fee2e2; border-color: #fca5a5; }
+.modal-head { text-align: center; margin-bottom: 22px; }
+.modal-emoji { font-size: 2.4rem; margin-bottom: 8px; }
+.modal-head h2 { font-size: 1.45rem; font-weight: 900; letter-spacing: -0.3px; margin-bottom: 5px; }
+.modal-head p { font-size: 0.85rem; color: var(--muted); font-weight: 500; }
+
+/* Google button */
+.google-btn { width: 100%; border: 2px solid var(--border); border-radius: 12px; padding: 12px; background: white; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; transition: border-color 0.2s, box-shadow 0.2s; margin-bottom: 16px; }
+.google-btn:hover { border-color: #4285f4; box-shadow: var(--shadow); }
+.g-icon { width: 22px; height: 22px; border-radius: 4px; background: linear-gradient(135deg, #ea4335 0%, #4285f4 100%); color: white; font-size: 0.75rem; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+
+/* divider */
+.or-divider { text-align: center; position: relative; margin: 0 0 16px; font-size: 0.75rem; color: var(--muted); font-weight: 700; }
+.or-divider::before, .or-divider::after { content: ''; position: absolute; top: 50%; width: 42%; height: 1.5px; background: var(--border); }
+.or-divider::before { left: 0; } .or-divider::after { right: 0; }
+
+/* form fields */
+.mrow { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mfg { margin-bottom: 12px; }
+.mfl { font-size: 0.79rem; font-weight: 800; display: block; margin-bottom: 5px; }
+.mfi { width: 100%; border: 2px solid var(--border); border-radius: 10px; padding: 10px 14px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; font-weight: 600; outline: none; transition: border-color 0.2s, box-shadow 0.2s; background: white; color: var(--ink); }
+.mfi:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(13,148,136,0.12); }
+.forgot-link { text-align: right; margin: -6px 0 12px; }
+.forgot-link a { font-size: 0.78rem; color: var(--teal); font-weight: 700; text-decoration: none; }
+
+/* submit */
+.modal-submit { width: 100%; background: var(--teal); color: white; border: none; padding: 14px; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.97rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; margin-top: 4px; }
+.modal-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,148,136,0.4); }
+
+.modal-switch { text-align: center; font-size: 0.81rem; color: var(--muted); font-weight: 600; margin-top: 14px; }
+.modal-switch a { color: var(--teal); font-weight: 800; text-decoration: none; }
+.modal-legal { text-align: center; font-size: 0.71rem; color: var(--muted); font-weight: 500; margin-top: 10px; line-height: 1.5; }
+
+/* success view */
+.success-view { text-align: center; padding: 8px 0 4px; }
+.success-view .s-emoji { font-size: 3.2rem; margin-bottom: 12px; }
+.success-view h2 { font-size: 1.4rem; font-weight: 900; margin-bottom: 8px; }
+.success-view p { font-size: 0.87rem; color: var(--muted); font-weight: 500; line-height: 1.65; margin-bottom: 20px; }
+.success-steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+.s-step { background: var(--bg); border: 2px solid var(--border); border-radius: 10px; padding: 10px 16px; font-size: 0.82rem; font-weight: 700; text-align: left; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="brand"><div class="brand-icon">💻</div>Code<span>WithMe</span></div>
+  <ul class="nav-links">
+    <li><a href="#courses-sec">Courses</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="nav-right">
+    <a id="admin-nav-btn" href="admin/dashboard.html" style="display:none;font-size:0.78rem;font-weight:800;color:var(--teal);text-decoration:none;padding:7px 14px;border-radius:100px;border:2px solid var(--teal);">🔐 Admin Panel</a>
+    <button class="nav-login" onclick="openModal('login')">Log In</button>
+    <button class="nav-cta" onclick="openModal('signup')">Get Started Free</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow"><span class="wave">👋</span> Hey there, future developer!</div>
+    <h1>Learn to <em>code</em> with a<br><span class="hl">real human</span> by your side.</h1>
+    <p>No confusing video series. No generic tutorials. Just you, your instructor, and a clear step-by-step plan designed around how <em>you</em> learn best.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="openModal('signup')">🚀 Get Started — It's Free</button>
+      <button class="btn-ghost" onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})">❓ Read the FAQ</button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">1,400+</div><div class="stat-label">Students taught 🎉</div></div>
+      <div><div class="stat-num">98%</div><div class="stat-label">Completion rate ✅</div></div>
+      <div><div class="stat-num">4.9★</div><div class="stat-label">Average rating ⭐</div></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hv-header">
+      <div class="hv-dots"><div class="hv-dot"></div><div class="hv-dot"></div><div class="hv-dot"></div></div>
+      <div class="hv-code">
+        <span class="cm">// lesson 5 — functions</span><br>
+        <span class="kw">function</span> <span class="fn">greetStudent</span>(name) {<br>
+        &nbsp;&nbsp;<span class="kw">return</span> <span class="str">`Hello, ${name}! 👋`</span>;<br>
+        }<br><br>
+        <span class="cm">// Live with your instructor 🚀</span><br>
+        <span class="fn">greetStudent</span>(<span class="str">"You"</span>);
+      </div>
+    </div>
+    <div class="hv-body">
+      <div class="hv-row"><div class="hv-icon" style="background:#f0fdf4;">✅</div><div><div class="hv-name">HTML & CSS Basics</div><div class="hv-sub">Completed · 2h 15min</div></div></div>
+      <div class="hv-row act"><div class="hv-icon" style="background:var(--teal-light);">🔴</div><div><div class="hv-name" style="color:var(--teal-dark)">JavaScript Functions</div><div class="hv-sub" style="color:var(--teal)">Live now · Join session</div></div></div>
+      <div class="hv-row"><div class="hv-icon" style="background:#eff6ff;">🔒</div><div><div class="hv-name">DOM & Events</div><div class="hv-sub">Up next · Tomorrow 3PM</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="section">
+  <div class="eyebrow">✨ Why CodeWithMe?</div>
+  <h2 class="sec-title">Learning that actually works</h2>
+  <div class="why-grid">
+    <div class="why-card"><div class="why-icon">🧑‍🏫</div><div class="why-title">Real instructor, not recordings</div><div class="why-desc">Every session is live with your instructor. Ask questions, get feedback, and learn at your own pace.</div></div>
+    <div class="why-card"><div class="why-icon">🗺️</div><div class="why-title">A clear roadmap just for you</div><div class="why-desc">Your curriculum is tailored to your goals so every lesson makes sense and builds on the last.</div></div>
+    <div class="why-card"><div class="why-icon">🛠️</div><div class="why-title">Build real, working projects</div><div class="why-desc">Every course ends with portfolio-ready projects. Show employers real proof of your skills.</div></div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section class="section" id="courses-sec">
+  <div class="eyebrow">👩‍💻 All Courses</div>
+  <h2 class="sec-title">Pick your path &amp; let's build! 🚀</h2>
+  <p class="sec-sub">All courses are taught live, one-on-one, with real projects and instructor feedback the whole way through.</p>
+  <div class="courses-grid" id="courses-grid"></div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq-section" id="faq">
+  <div class="eyebrow">❓ FAQ</div>
+  <h2 class="sec-title" style="text-align:center;">Questions? I've got answers 😊</h2>
+  <p class="sec-sub" style="text-align:center;margin:0 auto 0;">Everything you need to know before signing up. Still unsure? Just message me!</p>
+
+  <div class="faq-list">
+
+    <div class="faq-item open">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Do I need any prior coding experience?</span><span class="faq-arr">▼</span>
+      </div>
+      <div class="faq-a">Absolutely not! Many of my students start with zero experience. I have beginner-friendly courses designed for people who have never written a single line of code. We start from scratch and build up together at your pace. 😊</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>How do the live sessions work?</span><span class="faq-arr">▼</span>
+      </div>
+      <div class="faq-a">After you enroll, we schedule your first session via Google Meet or Zoom. I share my screen, walk you through lessons live, and you can ask questions at any time. Sessions are recorded so you can rewatch them. We typically do 2–3 sessions per week depending on your availability.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>How long does it take to complete a course?</span><span class="faq-arr">▼</span>
+      </div>
+      <div class="faq-a">Most students complete a course in 6–12 weeks doing 2–3 sessions per week. There's no rush — we go at your pace. You'll have lifetime access to all materials even after the course ends.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>What payment methods do you accept?</span><span class="faq-arr">▼</span>
+      </div>
+      <div class="faq-a">We accept M-PESA, credit/debit cards (Visa & Mastercard), and bank transfers. You can also pay in installments — just reach out and we'll work something out. All prices are in Kenyan Shillings (KES).</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>What if I'm not happy with the course?</span><span class="faq-arr">▼</span>
+      </div>
+      <div class="faq-a">I offer a full 7-day money-back guarantee, no questions asked. If you attend your first session and feel it's not the right fit, let me know within 7 days and I'll refund you completely. Your satisfaction matters most. 🛡️</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Will I get a certificate when I finish?</span><span class="faq-arr">▼</span>
+      </div>
+      <div class="faq-a">Yes! Every student who completes all lessons and the final project receives a personalized certificate of completion. You can add this to your LinkedIn, CV, or portfolio to show employers your new skills. 🏆</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Can I contact you between sessions?</span><span class="faq-arr">▼</span>
+      </div>
+      <div class="faq-a">Yes! All students get a direct WhatsApp/chat line for questions between sessions. Stuck on something? Send a message and I'll respond — usually within a few hours during the day. 💬</div>
+    </div>
+
+  </div>
+
+  <!-- CTA below FAQ -->
+  <div style="text-align:center;margin-top:40px;">
+    <p style="color:var(--muted);font-size:0.92rem;font-weight:600;margin-bottom:16px;">Still have questions? Feel free to reach out — or just jump in! 🚀</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn-primary" onclick="openModal('signup')">Create Free Account →</button>
+      <button class="btn-ghost" onclick="openModal('login')">Already signed up? Log in</button>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM CTA STRIP -->
+<div class="cta-strip">
+  <div style="position:relative;z-index:1;">
+    <div style="font-size:2.6rem;margin-bottom:12px;">🚀</div>
+    <h2>Ready to start your coding journey?</h2>
+    <p>Join 1,400+ students learning to code with a real instructor. Free to sign up — no credit card needed.</p>
+    <div class="cta-strip-btns">
+      <button class="btn-primary" style="font-size:1rem;padding:14px 32px;" onclick="openModal('signup')">Create Free Account →</button>
+      <button class="cta-ghost" onclick="openModal('login')">Log In</button>
+    </div>
+  </div>
+</div>
+
+<footer><strong>CodeWithMe</strong> · Real instruction. Real results. 💚 · © 2026</footer>
+
+<!-- MODAL OVERLAY -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal()"></div>
+
+<!-- AUTH MODAL -->
+<div class="modal" id="auth-modal">
+  <button class="modal-close" onclick="closeModal()">✕</button>
+
+  <!-- SIGN UP VIEW -->
+  <div id="view-signup">
+    <div class="modal-head">
+      <div class="modal-emoji">🚀</div>
+      <h2>Create your free account</h2>
+      <p>Join 1,400+ students learning to code live!</p>
+    </div>
+    <button class="google-btn"><div class="g-icon">G</div> Continue with Google</button>
+    <div class="or-divider"><span>or sign up with email</span></div>
+    <div class="mrow">
+      <div class="mfg"><label class="mfl">First Name</label><input class="mfi" type="text" placeholder="Jane"></div>
+      <div class="mfg"><label class="mfl">Last Name</label><input class="mfi" type="text" placeholder="Doe"></div>
+    </div>
+    <div class="mfg"><label class="mfl">Email Address</label><input class="mfi" type="email" placeholder="jane@email.com"></div>
+    <div class="mfg"><label class="mfl">Password</label><input class="mfi" type="password" placeholder="Create a password"></div>
+    <div class="mfg"><label class="mfl">Phone (for WhatsApp updates)</label><input class="mfi" type="tel" placeholder="+254 7XX XXX XXX"></div>
+    <button class="modal-submit" onclick="handleSignup()">Create Account →</button>
+    <p class="modal-switch">Already have an account? <a href="#" onclick="switchView('login')">Log in</a></p>
+    <p class="modal-legal">By signing up you agree to our Terms & Privacy Policy. No spam, ever. 💚</p>
+  </div>
+
+  <!-- LOGIN VIEW -->
+  <div id="view-login" style="display:none;">
+    <div class="modal-head">
+      <div class="modal-emoji">👋</div>
+      <h2>Welcome back!</h2>
+      <p>Log in to continue your learning journey.</p>
+    </div>
+    <button class="google-btn"><div class="g-icon">G</div> Continue with Google</button>
+    <div class="or-divider"><span>or log in with email</span></div>
+    <div class="mfg"><label class="mfl">Email Address</label><input class="mfi" type="email" placeholder="jane@email.com"></div>
+    <div class="mfg"><label class="mfl">Password</label><input class="mfi" type="password" placeholder="Your password"></div>
+    <div class="forgot-link"><a href="#">Forgot password?</a></div>
+    <button class="modal-submit" onclick="handleLogin()">Log In →</button>
+    <p class="modal-switch">Don't have an account? <a href="#" onclick="switchView('signup')">Sign up free</a></p>
+  </div>
+
+  <!-- SUCCESS VIEW -->
+  <div id="view-success" style="display:none;">
+    <div class="success-view">
+      <div class="s-emoji">🎉</div>
+      <h2>You're in! Welcome!</h2>
+      <p>Your account is ready. Your instructor has been notified and will message you within a few hours to schedule your <strong>free intro call!</strong></p>
+      <div class="success-steps">
+        <div class="s-step">📧 Check your email for a confirmation</div>
+        <div class="s-step">📱 Save our WhatsApp: +254 700 000 000</div>
+        <div class="s-step">📅 Intro call usually within 24 hours</div>
+      </div>
+      <button class="modal-submit" onclick="goToDashboard()">Go to My Dashboard →</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/courses.js"></script>
+<script src="js/main.js"></script>
+<script>
+// ── MODAL ──
+function openModal(view) {
+  document.getElementById('modal-overlay').classList.add('open');
+  const m = document.getElementById('auth-modal');
+  m.style.display = 'block';
+  setTimeout(() => m.classList.add('open'), 10);
+  switchView(view);
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  const m = document.getElementById('auth-modal');
+  m.classList.remove('open');
+  setTimeout(() => m.style.display = 'none', 280);
+  document.body.style.overflow = '';
+}
+function switchView(v) {
+  ['signup','login','success'].forEach(n => document.getElementById('view-'+n).style.display = 'none');
+  document.getElementById('view-'+v).style.display = 'block';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ── HANDLERS ──
+function handleSignup() { switchView('success'); }
+function handleLogin() { closeModal(); window.location.href = 'pages/dashboard.html'; }
+function goToDashboard() { closeModal(); sessionStorage.setItem('paymentSuccess','true'); window.location.href = 'pages/dashboard.html'; }
+
+// ── FAQ ──
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+// ── COURSE CARDS — require sign up ──
+function goToCourse(index) {
+  sessionStorage.setItem('selectedCourse', index);
+  openModal('signup');
+}
+</script>
+<script>
+// Show admin button if logged in as admin
+if(sessionStorage.getItem('adminAuth')==='true'){
+  const btn = document.getElementById('admin-nav-btn');
+  if(btn) btn.style.display = 'inline-flex';
+}
+</script>
+</body>
+</html>
