@@ -40,3 +40,9 @@ def admin_dashboard(request):
     students = Student.objects.all()
     courses = Course.objects.all()
     return render(request, 'admin/dashboard.html', {'students': students, 'courses': courses})
+
+
+def dashboard_redirect(request):
+    if request.user.is_staff:
+        return redirect('/admin/dashboard/')
+    return redirect('/pages/dashboard/')

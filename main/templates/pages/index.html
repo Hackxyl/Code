@@ -1,4 +1,5 @@
 {% load static %}
+{% load socialaccount %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -104,7 +105,7 @@
 
 <!-- NAV -->
 <nav>
-  <div class="brand"><div class="brand-icon">💻</div>Code<span>WithMe</span></div>
+  <div class="brand"><div class="brand-icon"><a href="">💻</a></div>Code<span>WithMe</span></div>
   <ul class="nav-links">
     <li><a href="#courses-sec">Courses</a></li>
     <li><a href="#faq">FAQ</a></li>
@@ -260,44 +261,72 @@
 
 <!-- AUTH MODAL -->
 <div class="modal" id="auth-modal">
-  <button class="modal-close" onclick="closeModal()">✕</button>
+  <div class="modal-close" onclick="closeModal()">×</div>
 
-  <!-- SIGN UP VIEW -->
-  <div id="view-signup">
-    <div class="modal-head">
-      <div class="modal-emoji">🚀</div>
-      <h2>Create your free account</h2>
-      <p>Join 1,400+ students learning to code live!</p>
-    </div>
-    <button class="google-btn"><div class="g-icon">G</div> Continue with Google</button>
-    <div class="or-divider"><span>or sign up with email</span></div>
-    <div class="mrow">
-      <div class="mfg"><label class="mfl">First Name</label><input class="mfi" type="text" placeholder="Jane"></div>
-      <div class="mfg"><label class="mfl">Last Name</label><input class="mfi" type="text" placeholder="Doe"></div>
-    </div>
-    <div class="mfg"><label class="mfl">Email Address</label><input class="mfi" type="email" placeholder="jane@email.com"></div>
-    <div class="mfg"><label class="mfl">Password</label><input class="mfi" type="password" placeholder="Create a password"></div>
-    <div class="mfg"><label class="mfl">Phone (for WhatsApp updates)</label><input class="mfi" type="tel" placeholder="+254 7XX XXX XXX"></div>
-    <button class="modal-submit" onclick="handleSignup()">Create Account →</button>
-    <p class="modal-switch">Already have an account? <a href="#" onclick="switchView('login')">Log in</a></p>
-    <p class="modal-legal">By signing up you agree to our Terms & Privacy Policy. No spam, ever. 💚</p>
+<!-- SIGN UP VIEW -->
+<div id="view-signup">
+  <div class="modal-head">
+    <div class="modal-emoji">🚀</div>
+    <h2>Create your free account</h2>
+    <p>Join 1,400+ students learning to code live!</p>
   </div>
 
-  <!-- LOGIN VIEW -->
-  <div id="view-login" style="display:none;">
-    <div class="modal-head">
-      <div class="modal-emoji">👋</div>
-      <h2>Welcome back!</h2>
-      <p>Log in to continue your learning journey.</p>
-    </div>
-    <button class="google-btn"><div class="g-icon">G</div> Continue with Google</button>
-    <div class="or-divider"><span>or log in with email</span></div>
-    <div class="mfg"><label class="mfl">Email Address</label><input class="mfi" type="email" placeholder="jane@email.com"></div>
-    <div class="mfg"><label class="mfl">Password</label><input class="mfi" type="password" placeholder="Your password"></div>
-    <div class="forgot-link"><a href="#">Forgot password?</a></div>
-    <button class="modal-submit" onclick="handleLogin()">Log In →</button>
-    <p class="modal-switch">Don't have an account? <a href="#" onclick="switchView('signup')">Sign up free</a></p>
+  <!-- Google Signup/Login Button -->
+  {% if 'allauth.socialaccount.providers.google' in INSTALLED_APPS %}
+  <a href="{% provider_login_url 'google' %}" class="google-btn">
+    <div class="g-icon">G</div> Continue with Google
+  </a>
+  {% else %}
+  <button class="google-btn" onclick="handleGoogleLogin()">
+    <div class="g-icon">G</div> Continue with Google (Simulated)
+  </button>
+  {% endif %}
+
+  <div class="or-divider"><span>or sign up with email</span></div>
+
+  <div class="mrow">
+    <div class="mfg"><label class="mfl">First Name</label><input class="mfi" type="text" placeholder="Jane"></div>
+    <div class="mfg"><label class="mfl">Last Name</label><input class="mfi" type="text" placeholder="Doe"></div>
   </div>
+  <div class="mfg"><label class="mfl">Email Address</label><input class="mfi" type="email" placeholder="jane@email.com"></div>
+  <div class="mfg"><label class="mfl">Password</label><input class="mfi" type="password" placeholder="Create a password"></div>
+  <div class="mfg"><label class="mfl">Phone (for WhatsApp updates)</label><input class="mfi" type="tel" placeholder="+254 7XX XXX XXX"></div>
+
+  <button class="modal-submit" onclick="handleSignup()">Create Account →</button>
+  <p class="modal-switch">Already have an account? <a href="#" onclick="switchView('login')">Log in</a></p>
+  <p class="modal-legal">By signing up you agree to our Terms & Privacy Policy. No spam, ever. 💚</p>
+</div>
+
+
+
+<!-- LOGIN VIEW -->
+<div id="view-login" style="display:none;">
+  <div class="modal-head">
+    <div class="modal-emoji">👋</div>
+    <h2>Welcome back!</h2>
+    <p>Log in to continue your learning journey.</p>
+  </div>
+
+  <!-- Google Login Button -->
+  {% if 'allauth.socialaccount.providers.google' in INSTALLED_APPS %}
+  <a href="{% provider_login_url 'google' %}" class="google-btn">
+    <div class="g-icon">G</div> Continue with Google
+  </a>
+  {% else %}
+  <button class="google-btn" onclick="handleGoogleLogin()">
+    <div class="g-icon">G</div> Continue with Google (Simulated)
+  </button>
+  {% endif %}
+
+  <div class="or-divider"><span>or log in with email</span></div>
+
+  <div class="mfg"><label class="mfl">Email Address</label><input class="mfi" type="email" placeholder="jane@email.com"></div>
+  <div class="mfg"><label class="mfl">Password</label><input class="mfi" type="password" placeholder="Your password"></div>
+  <div class="forgot-link"><a href="#">Forgot password?</a></div>
+  <button class="modal-submit" onclick="handleLogin()">Log In →</button>
+
+  <p class="modal-switch">Don't have an account? <a href="#" onclick="switchView('signup')">Sign up free</a></p>
+</div>
 
   <!-- SUCCESS VIEW -->
   <div id="view-success" style="display:none;">
@@ -318,6 +347,13 @@
 <script src="{% static 'main/js/courses.js' %}"></script>
 <script src="{% static 'main/js/main.js' %}"></script>
 <script>
+
+// Simulated users
+const users = [
+  { email: 'meshack@admin.com', password: 'meshack', role: 'admin' },
+  { email: 'jane@email.com', password: '123456', role: 'user' }
+];
+
 // ── MODAL ──
 function openModal(view) {
   document.getElementById('modal-overlay').classList.add('open');
@@ -327,6 +363,7 @@ function openModal(view) {
   switchView(view);
   document.body.style.overflow = 'hidden';
 }
+
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
   const m = document.getElementById('auth-modal');
@@ -334,18 +371,103 @@ function closeModal() {
   setTimeout(() => m.style.display = 'none', 280);
   document.body.style.overflow = '';
 }
+
 function switchView(v) {
   ['signup','login','success'].forEach(n => document.getElementById('view-'+n).style.display = 'none');
   document.getElementById('view-'+v).style.display = 'block';
 }
+
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-// ── HANDLERS ──
-function handleSignup() { switchView('success'); }
-function handleLogin() { closeModal(); window.location.href = 'pages/dashboard.html'; }
-function goToDashboard() { closeModal(); sessionStorage.setItem('paymentSuccess','true'); window.location.href = 'pages/dashboard.html'; }
+// ── SIGNUP ──
+function handleSignup() {
+  const firstName = document.querySelector('#view-signup input[placeholder="Jane"]').value.trim();
+  const lastName  = document.querySelector('#view-signup input[placeholder="Doe"]').value.trim();
+  const email     = document.querySelector('#view-signup input[type="email"]').value.trim();
+  const password  = document.querySelector('#view-signup input[type="password"]').value;
+  const phone     = document.querySelector('#view-signup input[type="tel"]').value.trim();
 
-// ── FAQ ──
+  // Simple validation
+  if (!firstName || !lastName || !email || !password || !phone) {
+    alert('❌ Please fill in all fields.');
+    return;
+  }
+
+  // Optional: basic email format check
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    alert('❌ Please enter a valid email address.');
+    return;
+  }
+
+  // Optional: password length check
+  if (password.length < 6) {
+    alert('❌ Password must be at least 6 characters.');
+    return;
+  }
+
+  // Store user in sessionStorage for simulation
+  const users = JSON.parse(sessionStorage.getItem('users') || '[]');
+  users.push({ firstName, lastName, email, password, role: 'user' });
+  sessionStorage.setItem('users', JSON.stringify(users));
+
+  // Show success view
+  switchView('success');
+}
+
+// ── LOGIN ──
+function handleLogin() {
+  const email = document.querySelector('#view-login input[type="email"]').value.trim();
+  const password = document.querySelector('#view-login input[type="password"]').value;
+
+  // Get saved users from sessionStorage
+  const savedUsers = JSON.parse(sessionStorage.getItem('users') || '[]');
+
+  // Merge saved users with hardcoded ones
+  const allUsers = [
+    { email: 'meshack@admin.com', password: 'meshack58', role: 'admin' },
+    { email: 'jane@email.com', password: '123456', role: 'user' },
+    ...savedUsers
+  ];
+
+  // Find matching user
+  const user = allUsers.find(u => u.email === email && u.password === password);
+
+  if(user){
+    sessionStorage.setItem('userRole', user.role);
+    sessionStorage.setItem('userEmail', user.email);
+
+    if(user.role === 'admin'){
+      sessionStorage.setItem('adminAuth','true');
+      window.location.href = 'admin/dashboard.html';
+    } else {
+      window.location.href = 'pages/dashboard.html';
+    }
+  } else {
+    // show inline error if invalid
+    let errEl = document.getElementById('login-error');
+    if(!errEl){
+      errEl = document.createElement('div');
+      errEl.id = 'login-error';
+      errEl.className = 'err show';
+      errEl.innerText = '❌ Wrong credentials. Please try again.';
+      const loginView = document.getElementById('view-login');
+      loginView.insertBefore(errEl, loginView.querySelector('.mfg'));
+    } else {
+      errEl.classList.add('show');
+    }
+    document.querySelector('#view-login input[type="password"]').value = '';
+  }
+}
+
+// ── SUCCESS DASHBOARD REDIRECT ──
+function goToDashboard() {
+  closeModal();
+  sessionStorage.setItem('paymentSuccess','true');
+  window.location.href = 'pages/dashboard.html';
+}
+
+// ── FAQ TOGGLE ──
 function toggleFaq(el) {
   const item = el.parentElement;
   const wasOpen = item.classList.contains('open');
@@ -353,17 +475,36 @@ function toggleFaq(el) {
   if (!wasOpen) item.classList.add('open');
 }
 
-// ── COURSE CARDS — require sign up ──
-function goToCourse(index) {
-  sessionStorage.setItem('selectedCourse', index);
-  openModal('signup');
-}
-</script>
-<script>
-// Show admin button if logged in as admin
+// Show admin nav button if logged in as admin
 if(sessionStorage.getItem('adminAuth')==='true'){
   const btn = document.getElementById('admin-nav-btn');
   if(btn) btn.style.display = 'inline-flex';
+}
+
+ // ── SIMULATED GOOGLE LOGIN ──
+function handleGoogleLogin() {
+  const googleUser = {
+    firstName: 'Google',
+    lastName: 'User',
+    email: 'google.user@example.com',
+    role: 'user'
+  };
+
+  // Save Google user if not already in sessionStorage
+  let savedUsers = JSON.parse(sessionStorage.getItem('users') || '[]');
+  const exists = savedUsers.some(u => u.email === googleUser.email);
+  if (!exists) {
+    savedUsers.push({ ...googleUser, password: 'google' }); // password placeholder
+    sessionStorage.setItem('users', JSON.stringify(savedUsers));
+  }
+
+  // Set session
+  sessionStorage.setItem('userRole', googleUser.role);
+  sessionStorage.setItem('userEmail', googleUser.email);
+
+  // Close modal and redirect
+  closeModal();
+  window.location.href = 'pages/dashboard.html';
 }
 </script>
 </body>
