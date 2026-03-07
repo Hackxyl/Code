@@ -36,11 +36,11 @@ h2{font-size:1.5rem;font-weight:900;text-align:center;margin-bottom:5px;}
 <div class="card">
   <div class="brand"><div class="bico">💻</div><div class="bname">Code<span>WithMe</span></div></div>
   <div class="badge">🔐 Admin Access Only</div>
-  <h2>Welcome back, Brian</h2>
+  <h2>Welcome back, Meshack</h2>
   <p class="sub">Log in to manage your entire platform.</p>
-  <div class="hint">💡 Username: <strong>admin</strong> &nbsp;·&nbsp; Password: <strong>admin123</strong></div>
+  <div class="hint">💡 Username: <strong>meshack</strong> &nbsp;·&nbsp; Password: <strong>meshack58</strong></div>
   <div class="err" id="err">❌ Wrong credentials. Please try again.</div>
-  <div class="fg"><label class="fl">Username</label><input class="fi" id="u" type="text" placeholder="admin"></div>
+  <div class="fg"><label class="fl">Username</label><input class="fi" id="u" type="text" placeholder="Meshack"></div>
   <div class="fg"><label class="fl">Password</label><input class="fi" id="p" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()"></div>
   <button class="btn" onclick="login()">🔐 Enter Admin Panel</button>
   <span class="back"><a href="../index.html">← Back to website</a></span>
@@ -49,7 +49,7 @@ h2{font-size:1.5rem;font-weight:900;text-align:center;margin-bottom:5px;}
 function login(){
   const u=document.getElementById('u').value.trim();
   const p=document.getElementById('p').value;
-  if(u==='admin'&&p==='admin123'){
+  if(u==='meshack'&&p==='meshack58'){
     sessionStorage.setItem('adminAuth','true');
     window.location.href='dashboard.html';
   } else {

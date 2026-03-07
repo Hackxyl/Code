@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CodeWithMe — Learn Tech the Fun Way</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 <style>
 /* ── NAV EXTRAS ── */
 .nav-right { display: flex; align-items: center; gap: 10px; }
@@ -314,8 +315,8 @@
   </div>
 </div>
 
-<script src="js/courses.js"></script>
-<script src="js/main.js"></script>
+<script src="{% static 'main/js/courses.js' %}"></script>
+<script src="{% static 'main/js/main.js' %}"></script>
 <script>
 // ── MODAL ──
 function openModal(view) {
